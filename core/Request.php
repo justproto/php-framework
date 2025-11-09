@@ -11,6 +11,11 @@ class Request
         $this->uri = trim(urldecode($uri), '/');
     }
 
+    public function getPath(): string
+    {
+        return $this->removeQueryString();
+    }
+
     public function getMethod() : string
     {
     return strtoupper($_SERVER['REQUEST_METHOD']);
@@ -39,5 +44,17 @@ class Request
     public function  post($name, $default = null): ?string
     {
         return $_POST[$name] ?? $default;
+    }
+
+    public function removeQueryString(): string
+    {
+        if ($this->uri){
+            $params = explode('&', $this->uri);
+            if (str_contains($params[0], '=') === false){
+                return  trim($params[0], '/');
+            }
+
+        }
+        return "";
     }
 }
