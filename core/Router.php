@@ -4,15 +4,41 @@ namespace PHPFramework;
 
 class Router
 {
-
-    public Request $request;
-    public Response $response;
+//    protected Request $request;
+//    protected Response $response;
     protected array $routes = [];
+    protected $route_params = [];
 
-    public function __construct(Request $request, Response $response)
+//    public function __construct(Request $request, Response $response)
+//    {
+//        $this->request = $request;
+//        $this->response = $response;
+//    }
+
+    public function __construct(
+        protected Request $request,
+        protected Response $response
+    )
     {
-        $this->request = $request;
-        $this->response = $response;
+    }
+
+    public function add($path, $callback, $method): self
+    {
+        $path = trim($path, '/');
+        if (is_array($method)){
+            $method = array_map('strtoupper', $method);
+        } else {
+            $method = [strtoupper($method)];
+        }
+        $this->routes[] = [
+          'path' => "/$path",
+          'callback' => $callback,
+          'middleware' => null,
+          'method' => $method,
+          'needToken' => true,
+        ];
+
+        return $this;
     }
 
     public function  getRoutes(): array
@@ -20,28 +46,71 @@ class Router
         return  $this->routes;
     }
 
-    public function get($path, $callback): void
+    public function get($path, $callback)
     {
-        $path = trim($path, '/');
-        $this->routes['GET']["/{$path}"] = $callback;
+        return $this->add($path, $callback, 'GET');
+//        $path = trim($path, '/');
+//        $this->routes['GET']["/$path"] = $callback;
     }
 
-    public function post($path, $callback): void
+    public function post($path, $callback)
     {
-        $this->routes['POST'][$path] = $callback;
+        return $this->add($path, $callback, 'POST');
+//        $this->routes['POST'][$path] = $callback;
     }
 
     public function dispatch(): mixed
     {
         $path = $this->request->getPath();
-        $method = $this->request->getMethod();
-        $callback = $this->routes[$method]["/{$path}"] ?? false;
-
-        if ($callback === false) {
+        $route = $this->matchRoute($path);
+        if ($route === false){
             $this->response->setResponseCode(404);
-            return 'Page not found';
+            echo '404 - Page not found';
+            die;
         }
-        return call_user_func($callback);
+
+        if (is_array($route['callback'])){
+            $route['callback'][0] = new $route['callback'][0];
+        }
+        return call_user_func($route['callback']);
+
+//        dump($route);
+//        return 'ok';
+//
+//        $method = $this->request->getMethod();
+//        $callback = $this->routes[$method]["/$path"] ?? false;
+//
+//        if ($callback === false) {
+//            $this->response->setResponseCode(404);
+//            return 'Page not found';
+//        }
+//        if (is_array($callback)){
+////            $action = $callback[1];
+////            $object = new $callback[0];
+////            return $object->$action();
+//            $callback[0] = new $callback[0];
+//        }
+//
+//        return call_user_func($callback);
+    }
+
+    protected function matchRoute($path)
+    {
+        foreach ($this->routes as $route) {
+            if (
+                preg_match("#^{$route['path']}$#", "/{$path}", $matches)
+                &&
+                in_array($this->request->getMethod(), $route['method'])
+            ){
+                foreach ($matches as $k => $v){
+                    if (is_string($k)){
+                        $this->route_params[$k] = $v;
+                    }
+                }
+                return $route;
+            }
+        }
+        return false;
     }
 
 }

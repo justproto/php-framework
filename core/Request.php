@@ -49,11 +49,10 @@ class Request
     public function removeQueryString(): string
     {
         if ($this->uri){
-            $params = explode('&', $this->uri);
-            if (str_contains($params[0], '=') === false){
+            $params = explode('?', $this->uri);
+//            if (str_contains($params[0], '=') === false){
                 return  trim($params[0], '/');
-            }
-
+//            }
         }
         return "";
     }
