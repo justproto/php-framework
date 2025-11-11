@@ -2,12 +2,22 @@
 
 namespace App\Controllers;
 
-class ContactController
+use PHPFramework\Controller;
+
+class ContactController extends Controller
 {
 
     public function index()
     {
-        return 'Contact form page';
+        $title = 'Contacts';
+        $name = 'John';
+        return view('contact',  compact('title', 'name'));
+//        return view('contact', ['title' => $title, 'name' => $name]);
+//        return view('contact', ['title' => 'Page with contacts', 'name' => 'Author']);
+//        return view()->render('contact');
+//        return $this->render('contact');
+//        return app()->view->render('contact');
+//        return 'Contact form page';
     }
 
     public function send()

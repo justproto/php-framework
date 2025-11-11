@@ -7,7 +7,7 @@ class Router
 //    protected Request $request;
 //    protected Response $response;
     protected array $routes = [];
-    protected $route_params = [];
+    protected array $route_params = [];
 
 //    public function __construct(Request $request, Response $response)
 //    {
@@ -46,14 +46,14 @@ class Router
         return  $this->routes;
     }
 
-    public function get($path, $callback)
+    public function get($path, $callback): self
     {
         return $this->add($path, $callback, 'GET');
 //        $path = trim($path, '/');
 //        $this->routes['GET']["/$path"] = $callback;
     }
 
-    public function post($path, $callback)
+    public function post($path, $callback): self
     {
         return $this->add($path, $callback, 'POST');
 //        $this->routes['POST'][$path] = $callback;
@@ -65,7 +65,7 @@ class Router
         $route = $this->matchRoute($path);
         if ($route === false){
             $this->response->setResponseCode(404);
-            echo '404 - Page not found';
+            return view('errors/404');
             die;
         }
 
@@ -94,7 +94,7 @@ class Router
 //        return call_user_func($callback);
     }
 
-    protected function matchRoute($path)
+    protected function matchRoute($path): mixed
     {
         foreach ($this->routes as $route) {
             if (
