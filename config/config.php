@@ -8,4 +8,5 @@ const CORE = ROOT . '/core';
 const HELPERS = ROOT . '/helpers';
 const VIEWS = APP . '/Views';
 const LAYOUT = 'default';
+const PATH = 'https://frm.loc';
 

@@ -3,7 +3,7 @@
 /** $var \PHPFramework\Application $app */
 
 $app->router->get('/', function (){
-    return view('main');
+    return view('main', ['title' => 'Home page'], 'test');
 });
 
 $app->router->get('/about', function (){

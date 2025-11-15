@@ -1,17 +1,23 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+<div class="container">
 
-<h1>Contact form view page</h1>
-<?= $title ?>
-<?= $name ?>
+    <div class="row">
 
-</body>
-</html>
+        <div class="col-md-6 offset-md-3">
+            <h1>Contact form view page</h1>
+
+            <form action="" method="post">
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" id="email" placeholder="name@example.com">
+                </div>
+                <div class="mb-3">
+                    <label for="content" class="form-label">content</label>
+                    <textarea class="form-control" name="content" id="content" rows="3"></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+        </div>
+    </div>
+
+</div>

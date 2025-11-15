@@ -12,16 +12,11 @@ class ContactController extends Controller
         $title = 'Contacts';
         $name = 'John';
         return view('contact',  compact('title', 'name'));
-//        return view('contact', ['title' => $title, 'name' => $name]);
-//        return view('contact', ['title' => 'Page with contacts', 'name' => 'Author']);
-//        return view()->render('contact');
-//        return $this->render('contact');
-//        return app()->view->render('contact');
-//        return 'Contact form page';
     }
 
     public function send()
     {
+        dump($_POST);
         return 'Contact form POST page';
     }
 }
