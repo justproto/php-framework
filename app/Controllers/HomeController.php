@@ -8,9 +8,10 @@ class HomeController
 //        echo __METHOD__;
     }
 
-    public function test()
+    public function index()
     {
-        return 'Test page';
+        return view('test', ['name' => 'John', 'age' => 30]);
+//        return 'Test page';
     }
 
     public function contact()

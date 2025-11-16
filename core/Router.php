@@ -4,16 +4,8 @@ namespace PHPFramework;
 
 class Router
 {
-//    protected Request $request;
-//    protected Response $response;
     protected array $routes = [];
     protected array $route_params = [];
-
-//    public function __construct(Request $request, Response $response)
-//    {
-//        $this->request = $request;
-//        $this->response = $response;
-//    }
 
     public function __construct(
         protected Request $request,
@@ -49,8 +41,6 @@ class Router
     public function get($path, $callback): self
     {
         return $this->add($path, $callback, 'GET');
-//        $path = trim($path, '/');
-//        $this->routes['GET']["/$path"] = $callback;
     }
 
     public function post($path, $callback): self
@@ -64,34 +54,13 @@ class Router
         $path = $this->request->getPath();
         $route = $this->matchRoute($path);
         if ($route === false){
-            $this->response->setResponseCode(404);
-            return view('errors/404');
-            die;
+            abort('404  error text', '404');
         }
 
         if (is_array($route['callback'])){
             $route['callback'][0] = new $route['callback'][0];
         }
         return call_user_func($route['callback']);
-
-//        dump($route);
-//        return 'ok';
-//
-//        $method = $this->request->getMethod();
-//        $callback = $this->routes[$method]["/$path"] ?? false;
-//
-//        if ($callback === false) {
-//            $this->response->setResponseCode(404);
-//            return 'Page not found';
-//        }
-//        if (is_array($callback)){
-////            $action = $callback[1];
-////            $object = new $callback[0];
-////            return $object->$action();
-//            $callback[0] = new $callback[0];
-//        }
-//
-//        return call_user_func($callback);
     }
 
     protected function matchRoute($path): mixed

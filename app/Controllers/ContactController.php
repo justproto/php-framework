@@ -16,7 +16,10 @@ class ContactController extends Controller
 
     public function send()
     {
+        dump(app()->request->getData());
+        dump(request()->getData());
         dump($_POST);
+        dump(request()->post('email'));
         return 'Contact form POST page';
     }
 }

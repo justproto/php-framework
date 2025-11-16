@@ -11,6 +11,7 @@ class Request
         $this->uri = trim(urldecode($uri), '/');
     }
 
+
     public function getPath(): string
     {
         return $this->removeQueryString();
@@ -36,6 +37,7 @@ class Request
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) && $_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest';
     }
 
+
     public function  get($name, $default = null): ?string
     {
         return $_GET[$name] ?? $default;
@@ -56,4 +58,14 @@ class Request
         }
         return "";
     }
+    public function getData(): array
+    {
+        $data = [];
+        $request_data = $this->isGet() ? $_GET : $_POST;
+        foreach ($request_data as $k =>$v){
+            $data[$k] = trim($v);
+        }
+        return $data;
+    }
+
 }

@@ -3,7 +3,7 @@
 /** $var \PHPFramework\Application $app */
 
 $app->router->get('/', function (){
-    return view('main', ['title' => 'Home page'], 'test');
+    return view('main', ['title' => 'Home page'], 'default');
 });
 
 $app->router->get('/about', function (){
@@ -18,7 +18,7 @@ $app->router->post('/contact', [\App\Controllers\ContactController::class, 'send
 //    return 'Hello from home';
 //}, ['post', 'get']);
 
-$app->router->get('test', [\App\Controllers\HomeController::class, 'test']);
+$app->router->get('/test', [\App\Controllers\HomeController::class, 'index']);
 //$app->router->get('/contact/', [\App\Controllers\HomeController::class, 'contact']);
 
 $app->router->get('/post/(?P<slug>[a-z0-9-]+)/?', function (){
