@@ -18,9 +18,9 @@ class ContactController extends Controller
     public function send()
     {
         $model = new Contact();
-        dump($model);
         $model->loadData();
-        dump($model);
+        $model->validate();
+
         return 'Contact form POST page';
     }
 }

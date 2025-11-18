@@ -7,7 +7,12 @@ use PHPFramework\Model;
 class Contact extends Model
 {
 
-    public array $fillable = ['email', 'text', 'name'];
+    public array $fillable = ['email', 'content', 'name', 'username'];
     public array $attributes = [];
+    public array $rules = [
+        'name' => ['required' => true],
+        'email' => ['email' => true, 'min' => 5, 'max' => 90],
+        'content' => ['min' => 20],
+    ];
 
 }
