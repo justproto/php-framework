@@ -19,8 +19,11 @@ class ContactController extends Controller
     {
         $model = new Contact();
         $model->loadData();
-        $model->validate();
-
+        if(!$model->validate()){
+//            dump($model->getErrors());
+            return view('contact', ['title' => 'Contact form', 'errors' => $model->getErrors()]);
+        }
+        response()->redirect('/');
         return 'Contact form POST page';
     }
 }
