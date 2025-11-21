@@ -56,3 +56,11 @@ function get_errors($fieldname, $errors = []): string
     }
     return $output;
 }
+
+function get_validation_class($fieldname, $errors = []): string
+{
+    if(empty($errors)){
+        return '';
+    }
+    return isset($errors[$fieldname]) ? 'is-invalid' : 'is-valid';
+}
