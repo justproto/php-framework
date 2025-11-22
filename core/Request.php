@@ -63,7 +63,7 @@ class Request
         $data = [];
         $request_data = $this->isGet() ? $_GET : $_POST;
         foreach ($request_data as $k =>$v){
-            $data[$k] = trim($v);
+            $data[$k] = is_string($v) ? trim($v) : '';
         }
         return $data;
     }

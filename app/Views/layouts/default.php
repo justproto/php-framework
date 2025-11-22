@@ -6,13 +6,13 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Default :: <?= $title ?? ''; ?></title>
-    <link rel="stylesheet" href="<?= base_url(); ?>/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="icon" href="<?= base_url(); ?>/images/framework.png">
+    <link rel="stylesheet" href="<?= base_url('/assets/bootstrap/css/bootstrap.min.css'); ?>">
+    <link rel="icon" href="<?= base_url('/images/framework.png'); ?>">
 </head>
 <body>
 
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
         <div class="container-fluid">
             <a class="navbar-brand" href="<?= base_url('/'); ?>">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -21,10 +21,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('/'); ?>">Home</a>
+                        <a class="nav-link" href="<?= base_url('/home'); ?>">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="<?= base_url('/contact'); ?>">Contact</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('/register'); ?>">Register</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="<?= base_url('/login'); ?>">Login</a>
                     </li>
                 </ul>
             </div>
@@ -33,6 +39,6 @@
 
 <?= $this->content; ?>
 
-<script src="<?= PATH ?>/assets/bootstrap/js/bootstrap.min.js"></script>
+<script src="<?= base_url('/assets/bootstrap/js/bootstrap.min.js') ?>"></script>
 </body>
 </html>

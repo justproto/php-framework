@@ -2,23 +2,25 @@
 
 namespace PHPFramework;
 
+use Valitron\Validator;
+
 abstract class Model
 {
 
-    public array $fillable = [];
+    protected array $fillable = [];
     public array $attributes = [];
-    public array $rules = [];
-    public array $labels = [];
+    protected array $rules = [];
+    protected array $labels = [];
     protected array $errors = [];
 
-    protected array $rules_list = ['required', 'min', 'max', 'email'];
-    protected array $messages = [
-        'required' => ':fieldname: field is required',
-        'min' => ':fieldname: field must be a minimum :rulevalue: characters',
-        'max' => ':fieldname: field must be a maximum :rulevalue: characters',
-        'email' => 'This e-mail is not valid',
-
-    ];
+//    protected array $rules_list = ['required', 'min', 'max', 'email'];
+//    protected array $messages = [
+//        'required' => ':fieldname: field is required',
+//        'min' => ':fieldname: field must be a minimum :rulevalue: characters',
+//        'max' => ':fieldname: field must be a maximum :rulevalue: characters',
+//        'email' => 'This e-mail is not valid',
+//
+//    ];
 
     public function loadData(): void
     {
@@ -32,19 +34,42 @@ abstract class Model
         }
     }
 
-    public function validate(): bool
+    public function validate($data = [], $rules = [], $labels = []): bool
     {
-        foreach ($this->attributes as $fieldname => $value){
-            if (isset($this->rules[$fieldname])){
-              $this->check([
-                  'fieldname' => $fieldname,
-                  'value' => $value,
-                  'rules' => $this->rules[$fieldname],
-                  ]);
-            }
+        if(!$data){
+            $data = $this->attributes;
         }
-        return !($this->hasErrors());
+        if(!$rules){
+            $rules = $this->rules;
+        }
+        if(!$labels){
+            $labels = $this->labels;
+        }
+//        Validator::langDir(WWW . '/lang');
+//        Validator::lang('uk');
+        $validator = new Validator($data);
+        $validator->rules($rules);
+        $validator->labels($labels);
+        if ($validator->validate()){
+            return true;
+        } else{
+            $this->errors = $validator->errors();
+            return false;
+        }
     }
+//    public function validate(): bool
+//    {
+//        foreach ($this->attributes as $fieldname => $value){
+//            if (isset($this->rules[$fieldname])){
+//              $this->check([
+//                  'fieldname' => $fieldname,
+//                  'value' => $value,
+//                  'rules' => $this->rules[$fieldname],
+//                  ]);
+//            }
+//        }
+//        return !($this->hasErrors());
+//    }
 
     protected function check(array $field): void
     {

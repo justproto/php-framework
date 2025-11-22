@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Controllers;
-class HomeController
+class HomeController extends BaseController
 {
     public function __construct()
     {
@@ -10,7 +10,7 @@ class HomeController
 
     public function index()
     {
-        return view('test', ['name' => 'John', 'age' => 30]);
+        return view('home', ['name' => 'John', 'age' => 30], 'default');
 //        return 'Test page';
     }
 

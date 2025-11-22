@@ -1,5 +1,5 @@
 <div class="container">
-<h2>Hello from TEST view</h2>
+<h2>Hello from Home view</h2>
 
 <?php dump($name, $age) ?>
 </div>
