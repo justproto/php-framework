@@ -57,7 +57,9 @@ abstract class Model
             return false;
         }
     }
-//    public function validate(): bool
+
+    /* custom validation method which used in contact form and has to be replaced by validation (valitron) in next commits */
+//    public function validateCustom(): bool
 //    {
 //        foreach ($this->attributes as $fieldname => $value){
 //            if (isset($this->rules[$fieldname])){
@@ -71,28 +73,29 @@ abstract class Model
 //        return !($this->hasErrors());
 //    }
 
-    protected function check(array $field): void
-    {
-        foreach ($field['rules'] as $rule => $rule_value){
-            if (in_array($rule, $this->rules_list)){
-                if (!call_user_func_array([$this, $rule], [$field['value'], $rule_value])){
-                    $this->addError(
-                        $field['fieldname'],
-                        str_replace(
-                            [':fieldname:', ':rulevalue:'],
-                            [$this->labels[$field['fieldname']] ?? $field['fieldname'], $rule_value],
-                            $this->messages[$rule]
-                        )
-                    );
-                }
-            }
-        }
-    }
+    /* custom validation function which used in contact form and has to be replaced by validation (valitron) in next commits */
+//    protected function check(array $field): void
+//    {
+//        foreach ($field['rules'] as $rule => $rule_value){
+//            if (in_array($rule, $this->rules_list)){
+//                if (!call_user_func_array([$this, $rule], [$field['value'], $rule_value])){
+//                    $this->addError(
+//                        $field['fieldname'],
+//                        str_replace(
+//                            [':fieldname:', ':rulevalue:'],
+//                            [$this->labels[$field['fieldname']] ?? $field['fieldname'], $rule_value],
+//                            $this->messages[$rule]
+//                        )
+//                    );
+//                }
+//            }
+//        }
+//    }
 
-    protected function addError($fieldname, $error): void
-    {
-        $this->errors[$fieldname][] = $error;
-    }
+//    protected function addError($fieldname, $error): void
+//    {
+//        $this->errors[$fieldname][] = $error;
+//    }
 
     public function getErrors(): array
     {
@@ -104,23 +107,24 @@ abstract class Model
         return !empty($this->errors);
     }
 
-    protected function required($value, $rule_value): bool
-    {
-        return !empty(trim($value));
-    }
-
-    protected function min($value, $rule_value): bool
-    {
-        return mb_strlen($value, 'UTF-8') >= $rule_value;
-    }
-
-    protected function max($value, $rule_value): bool
-    {
-        return mb_strlen($value, 'UTF-8') <= $rule_value;
-    }
-
-    protected function email($value, $rule_value): bool
-    {
-        return filter_var($value, FILTER_VALIDATE_EMAIL);
-    }
+    /* custom validation functions which used in contact form and has to be replaced by validation (valitron) in next commits */
+//    protected function required($value, $rule_value): bool
+//    {
+//        return !empty(trim($value));
+//    }
+//
+//    protected function min($value, $rule_value): bool
+//    {
+//        return mb_strlen($value, 'UTF-8') >= $rule_value;
+//    }
+//
+//    protected function max($value, $rule_value): bool
+//    {
+//        return mb_strlen($value, 'UTF-8') <= $rule_value;
+//    }
+//
+//    protected function email($value, $rule_value): bool
+//    {
+//        return filter_var($value, FILTER_VALIDATE_EMAIL);
+//    }
 }

@@ -14,7 +14,7 @@ $app->router->get('/about', function (){
 });
 
 $app->router->get('/contact', [ContactController::class, 'index']);
-$app->router->post('/contact', [ContactController::class, 'send']);
+$app->router->post('/contact', [ContactController::class, 'store']);
 
 $app->router->get('/home', [HomeController::class, 'index']);
 $app->router->get('/register', [UserController::class, 'register']);

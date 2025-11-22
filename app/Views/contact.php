@@ -8,7 +8,7 @@
             <form action="" method="post">
                 <div class="mb-3">
                     <label for="name" class="form-label">Name</label>
-                    <input type="text" name="name" class="form-control <?= get_validation_class('name', $errors ?? []) ?>" id="name" placeholder="name" value="<?= old('name'); ?>">
+                    <input type="text" name="name" class="form-control <?= get_validation_class('name', $errors ?? []) ?>" id="name" placeholder="Name" value="<?= old('name'); ?>">
                     <?= get_errors('name', $errors ?? []) ?>
                 </div>
                 <div class="mb-3">

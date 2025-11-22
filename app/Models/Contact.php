@@ -6,18 +6,22 @@ use PHPFramework\Model;
 
 class Contact extends Model
 {
-
-    public array $fillable = ['email', 'content', 'name', 'username'];
-    public array $attributes = [];
-    public array $rules = [
-        'name' => ['required' => true],
-        'email' => ['email' => true, 'min' => 5, 'max' => 90],
-        'content' => ['min' => 20],
+    protected array $fillable = ['email', 'content', 'name', 'username'];
+    protected array $rules = [
+            'required' => ['email', 'content', 'name'],
+            'email' => ['email'],
+            'lengthMin' => [
+                ['email', 5],
+                ['content', 20]
+            ],
+            'lengthMax' => [
+            ['email', 90],
+            ],
     ];
 
-    public array $labels = [
-        'name' => 'Name',
-        'email' => 'E-mail',
-        'content' => 'Content',
+    protected array $labels = [
+        'name' => 'Field "Name"',
+        'email' => 'Field "E-mail"',
+        'content' => 'Field "Content"',
     ];
 }

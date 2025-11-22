@@ -15,14 +15,16 @@ class ContactController extends Controller
         return view('contact',  compact('title', 'name'));
     }
 
-    public function send()
+    public function store()
     {
         $model = new Contact();
         $model->loadData();
         if(!$model->validate()){
-//            dump($model->getErrors());
             return view('contact', ['title' => 'Contact form', 'errors' => $model->getErrors()]);
         }
+//        if(!$model->validateCustom()){
+//            return view('contact', ['title' => 'Contact form', 'errors' => $model->getErrors()]);
+//        }
         response()->redirect('/');
         return 'Contact form POST page';
     }
