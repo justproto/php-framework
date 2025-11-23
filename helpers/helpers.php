@@ -81,3 +81,13 @@ function get_alerts(): void
         }
     }
 }
+
+function get_csrf_field(): string
+{
+    return '<input type="hidden" name="csrf_token" value="' . session()->get('csrf_token') . '">';
+}
+
+function get_csrf_meta(): string
+{
+    return '<meta name="csrf_token" content="' . session()->get('csrf_token') . '">';
+}

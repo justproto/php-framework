@@ -27,3 +27,5 @@ $app->router->get('/login', [UserController::class, 'login']);
 //    return '<p>Some post</p>';
 //});
 //dump($app->router->getRoutes());
+
+//dump(__FILE__ . __LINE__ , $app->router->getRoutes());
