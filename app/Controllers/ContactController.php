@@ -20,12 +20,19 @@ class ContactController extends Controller
         $model = new Contact();
         $model->loadData();
         if(!$model->validate()){
-            return view('contact', ['title' => 'Contact form', 'errors' => $model->getErrors()]);
+            session()->setFlash('error', 'Validation errors');
+            session()->set('form_errors', $model->getErrors());
+            session()->set('form_data', $model->attributes);
+//            return view('contact', ['title' => 'Contact form', 'errors' => $model->getErrors()]);
+            return view('contact', ['title' => 'Contact form']);
+        } else {
+            session()->setFlash('success', 'Successfully validation');
         }
 //        if(!$model->validateCustom()){
 //            return view('contact', ['title' => 'Contact form', 'errors' => $model->getErrors()]);
 //        }
         response()->redirect('/');
-        return 'Contact form POST page';
+        return '';
     }
+
 }

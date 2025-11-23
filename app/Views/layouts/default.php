@@ -12,7 +12,7 @@
 <body>
 
 
-    <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
+<nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
         <div class="container-fluid">
             <a class="navbar-brand" href="<?= base_url('/'); ?>">Navbar</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -37,7 +37,11 @@
         </div>
     </nav>
 
-<?= $this->content; ?>
+<?php get_alerts(); ?>
+<?=
+    /** @var string $content */
+    $content;
+?>
 
 <script src="<?= base_url('/assets/bootstrap/js/bootstrap.min.js') ?>"></script>
 </body>

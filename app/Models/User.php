@@ -19,9 +19,9 @@ class User extends Model {
     ];
 
     protected array $labels = [
-        'name' => 'Field "Name"',
-        'email' => 'Field "E-mail"',
-        'password' => 'Field "Password"',
-        'confirmPassword' => 'Field "Confirm password"',
+        'name' => 'Name',
+        'email' => 'E-mail',
+        'password' => 'Password',
+        'confirmPassword' => 'Confirm password',
     ];
 }

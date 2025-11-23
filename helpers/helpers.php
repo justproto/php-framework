@@ -14,6 +14,11 @@ function response(): \PHPFramework\Response
 {
     return app()->response;
 }
+
+function session(): \PHPFramework\Session
+{
+    return app()->session;
+}
 function view($view = '', $data = [], $layout = ''): string|\PHPFramework\View
 {
     if ($view){
@@ -41,12 +46,14 @@ function h($str): string
 
 function old($fieldname): string
 {
-    return isset($_POST[$fieldname]) ? h($_POST[$fieldname]) : '';
+    return isset(session()->get('form_data')[$fieldname])? h(session()->get('form_data')[$fieldname]) : '';
+//    return isset($_POST[$fieldname]) ? h($_POST[$fieldname]) : '';
 }
 
-function get_errors($fieldname, $errors = []): string
+function get_errors($fieldname): string
 {
     $output = '';
+    $errors = session()->get('form_errors');
     if (isset($errors[$fieldname])){
         $output .= '<div class="invalid-feedback d-block"><ul class="list-unstyled">';
         foreach ($errors[$fieldname] as $error){
@@ -57,10 +64,20 @@ function get_errors($fieldname, $errors = []): string
     return $output;
 }
 
-function get_validation_class($fieldname, $errors = []): string
+function get_validation_class($fieldname): string
 {
+    $errors = session()->get('form_errors');
     if(empty($errors)){
         return '';
     }
     return isset($errors[$fieldname]) ? 'is-invalid' : 'is-valid';
+}
+
+function get_alerts(): void
+{
+    if (!empty($_SESSION['flash'])){
+        foreach ($_SESSION['flash'] as $k => $v) {
+            echo view()->renderPartial("incs/alert_{$k}", ["flash_{$k}" => session()->getFlash($k)]);
+        }
+    }
 }

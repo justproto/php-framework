@@ -4,7 +4,7 @@ namespace PHPFramework;
 
 class View
 {
-    public string $content = '';
+//    public string $content = '';
 
     public function __construct(
         public string $layout,
@@ -18,13 +18,13 @@ class View
         if (is_file($view_file)){
             ob_start();
             require $view_file;
-            $this->content = ob_get_clean();
+            $content = ob_get_clean();
         } else {
             abort("Not found view {$view_file}", 500);
         }
 
         if ($layout === false){
-            return $this->content;
+            return $content;
         }
 
         $layout_file_name = $layout ?: $this->layout;
@@ -37,6 +37,20 @@ class View
         } else {
             abort("Not found layout {$layout_file}", 500);
         }
+        return '';
+    }
+
+    public function renderPartial($view, $data = []): string
+    {
+        extract($data);
+        $view_file = VIEWS . "/{$view}.php";
+        if (is_file($view_file)) {
+            ob_start();
+            require $view_file;
+            return ob_get_clean();
+        } else {
+            return "File {$view_file} not found";
+        };
         return '';
     }
 }

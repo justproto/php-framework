@@ -12,7 +12,7 @@ class Contact extends Model
             'email' => ['email'],
             'lengthMin' => [
                 ['email', 5],
-                ['content', 20]
+                ['content', 20],
             ],
             'lengthMax' => [
             ['email', 90],
@@ -20,8 +20,8 @@ class Contact extends Model
     ];
 
     protected array $labels = [
-        'name' => 'Field "Name"',
-        'email' => 'Field "E-mail"',
-        'content' => 'Field "Content"',
+        'name' => 'Name',
+        'email' => 'E-mail',
+        'content' => 'Content',
     ];
 }
