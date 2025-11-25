@@ -5,7 +5,7 @@ namespace App\Controllers;
 use App\Models\Contact;
 use PHPFramework\Controller;
 
-class ContactController extends Controller
+class ContactController extends BaseController
 {
 
     public function index()

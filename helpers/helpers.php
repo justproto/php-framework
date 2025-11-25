@@ -35,8 +35,15 @@ function base_url($path = ''): string
 function abort($error = '', $code = 404)
 {
     response()->setResponseCode($code);
-    echo view("errors/{$code}", ['error' => $error], false);
+    if (DEBUG || $code == 404){
+        echo view("errors/{$code}", ['error' => $error], false);
+    }
     die;
+}
+
+function db(): \PHPFramework\Database
+{
+    return app()->db;
 }
 
 function h($str): string

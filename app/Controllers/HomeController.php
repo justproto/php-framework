@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Controllers;
+use PHPFramework\Application;
+
 class HomeController extends BaseController
 {
     public function __construct()
@@ -10,7 +12,12 @@ class HomeController extends BaseController
 
     public function index()
     {
-        return view('home', ['name' => 'John', 'age' => 30], 'default');
+        dump(db());
+        dump(app()->db);
+        dump(Application::$app->db);
+
+        return view('home');
+//        return view('home', ['name' => 'John', 'age' => 30], 'default');
 //        return 'Test page';
     }
 

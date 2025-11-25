@@ -9,6 +9,7 @@ class Application
     public Response $response;
     public Router $router;
     public View $view;
+    public Database $db;
     public Session $session;
     public static Application $app;
 
@@ -20,6 +21,7 @@ class Application
         $this->response = new Response();
         $this->router = new Router($this->request, $this->response);
         $this->view = new View(LAYOUT);
+        $this->db = new Database();
         $this->session = new Session();
         $this->generateCsrfToken();
     }
