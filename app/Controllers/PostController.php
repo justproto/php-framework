@@ -16,18 +16,61 @@ class PostController extends BaseController
         $model = new Post();
         $model->loadData();
 
-//        if (!$model->validate()){
-//            return view('posts/create', ['title' => 'Create post', 'errors' => $model->getErrors()]);
-//        }
-
-        if(!$model->validate()){
-            session()->setFlash('error', 'Validation errors');
+        if (!$model->validate()){
             session()->set('form_errors', $model->getErrors());
             session()->set('form_data', $model->attributes);
-
-        } else {
-            session()->setFlash('success', 'Success post validation');
+            session()->setFlash('error', 'Post validation error');
+            return view('posts/create', ['title' => 'Create post', 'errors' => $model->getErrors()]);
         }
-        response()->redirect();
+        if ($id = $model->save()){
+            session()->setFlash('success', "Post {$id} created");
+        } else{
+            session()->setFlash('error', 'Unknown error');
+        }
+        response()->redirect('/posts/create');
+        return '';
     }
+
+    public function edit()
+    {
+        $id = request()->get('id');
+        $post = db()->findOrFail('posts', $id);
+        return view('posts/edit', ['title' => 'Edit post', 'post' => $post]);
+
+    }
+
+    public function update()
+    {
+        $id = request()->post('id');
+        db()->findOrFail('posts', $id);
+        $model = new Post();
+        $model->loadData();
+        $model->attributes['id'] = $id;
+        if (!$model->validate()){
+            session()->setFlash('error', $model->listErrors());
+            response()->redirect("/posts/edit?id={$id}");
+        }
+        if ($model->update() !== false){
+            session()->setFlash('success', "Post {$id} saved");
+        } else{
+            session()->setFlash('error', "Error updating");
+//            response()->redirect("/");
+        };
+            response()->redirect("/posts/edit?id={$id}");
+    }
+
+    public function delete()
+    {
+        $id = request()->get('id');
+        db()->findOrFail('posts', $id);
+        $model = new Post();
+        if ($model->delete($id)){
+            session()->setFlash('success', "Post {$id} deleted");
+        } else {
+            session()->setFlash('error', "Delete error");
+        }
+        response()->redirect('/');
+    }
+
+
 }

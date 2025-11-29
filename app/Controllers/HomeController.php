@@ -12,11 +12,11 @@ class HomeController extends BaseController
 
     public function index()
     {
+//        session()->set('name', 'John');
+//        session()->remove('name');
 //        $posts = db()->query("SELECT * FROM posts WHERE id > ?", [2])->get();
         $posts = db()->findAll('posts');
         $post = db()->findOrFail('posts', 4);
-//        dump($posts);
-        dump($post);
         return view('home', ['title' => 'Home page', 'posts' => $posts]);
 //        return 'Test page';
     }

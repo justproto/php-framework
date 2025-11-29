@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container my-2">
 
     <div class="alert alert-info alert-dismissible fade show" role="alert">
         <?= $flash_info ?? ''; ?>

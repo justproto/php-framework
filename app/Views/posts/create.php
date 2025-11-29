@@ -5,7 +5,7 @@
         <div class="col-md-6 offset-md-3">
             <h1>Create post form page</h1>
 
-            <form method="post" action="<?= base_url('/posts/store'); ?>">
+            <form action="<?= base_url('/posts/store'); ?>"  method="post">
 
                 <?= get_csrf_field(); ?>
 

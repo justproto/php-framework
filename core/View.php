@@ -50,7 +50,7 @@ class View
             return ob_get_clean();
         } else {
             return "File {$view_file} not found";
-        };
+        }
         return '';
     }
 }

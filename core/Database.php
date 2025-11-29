@@ -14,6 +14,7 @@ class Database
         try {
             $this->connection = new \PDO($dsn, DB['username'], DB['password'], DB['options']);
         } catch (\PDOException $e) {
+            error_log("[" . date('Y-m-d H:i:s'). "] DB Error: {$e->getMessage()}" . PHP_EOL, 3, ERROR_LOG_FILE);
             abort($e->getMessage(), 500);
         }
         return $this;
@@ -25,17 +26,18 @@ class Database
             $this->stmt = $this->connection->prepare($query);
             $this->stmt->execute($params);
         } catch(\PDOException $e){
+            error_log("[" . date('Y-m-d H:i:s'). "] DB Error: {$e->getMessage()}" . PHP_EOL, 3, ERROR_LOG_FILE);
             abort($e->getMessage(), 500);
         }
         return $this;
     }
 
-    public function get()
+    public function get(): array|false
     {
         return $this->stmt->fetchAll();
     }
 
-    public function findAll($tbl)
+    public function findAll($tbl): array|false
     {
         $this->query("SELECT * FROM {$tbl}");
         return $this->stmt->fetchAll();
@@ -52,5 +54,15 @@ class Database
         $res = $this->findOne($tbl, $id);
         if (!$res) abort();
         return $res;
+    }
+
+    public function getInsertId(): false|string
+    {
+        return $this->connection->lastInsertId();
+    }
+
+    public function rowCount(): int
+    {
+        return $this->stmt->rowCount();
     }
 }
