@@ -7,7 +7,7 @@ class Database
 
     protected \PDO $connection;
     protected \PDOStatement $stmt;
-
+    protected array $queries = [];
     public function __construct()
     {
         $dsn = "mysql:host=" . DB['host'] . ";dbname=" . DB['dbname'] . ";charset=" . DB['charset'];
@@ -23,8 +23,14 @@ class Database
     public function query(string $query, array $params = [])
     {
         try{
+//            $this->queries[] = $query;
             $this->stmt = $this->connection->prepare($query);
             $this->stmt->execute($params);
+            if (DEBUG){
+                ob_start();
+                $this->stmt->debugDumpParams();
+                $this->queries[] = ob_get_clean();
+            }
         } catch(\PDOException $e){
             error_log("[" . date('Y-m-d H:i:s'). "] DB Error: {$e->getMessage()}" . PHP_EOL, 3, ERROR_LOG_FILE);
             abort($e->getMessage(), 500);
@@ -64,5 +70,21 @@ class Database
     public function rowCount(): int
     {
         return $this->stmt->rowCount();
+    }
+
+    public function getQueries(): array
+    {
+        $res = [];
+        foreach ($this->queries as $k => $query){
+            $line = strtok($query, PHP_EOL);
+            while ($line !== false){
+                if (str_contains($line, 'SQL:') || str_contains($line, 'Sent SQL:')){
+                    $res[$k][] = $line;
+                }
+                $line = strtok(PHP_EOL);
+            }
+        }
+        return $res;
+
     }
 }

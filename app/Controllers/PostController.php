@@ -51,7 +51,7 @@ class PostController extends BaseController
             response()->redirect("/posts/edit?id={$id}");
         }
         if ($model->update() !== false){
-            session()->setFlash('success', "Post {$id} saved");
+            session()->setFlash('info', "Post {$id} saved");
         } else{
             session()->setFlash('error', "Error updating");
 //            response()->redirect("/");

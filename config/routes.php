@@ -25,8 +25,6 @@ $app->router->get('/posts/edit', [PostController::class, 'edit']);
 $app->router->post('/posts/update', [PostController::class, 'update']);
 $app->router->get('/posts/delete', [PostController::class, 'delete']);
 
-
-
 $app->router->get('/register', [UserController::class, 'register']);
 $app->router->post('/register', [UserController::class, 'store']);
 

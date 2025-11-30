@@ -1,5 +1,7 @@
 <?php
 
+$start_framework = microtime(true);
+
 use PHPFramework\Application;
 
 if(PHP_MAJOR_VERSION < 8){
@@ -30,3 +32,7 @@ require_once CONFIG . '/routes.php';
 //dd(app());
 
 $app->run();
+
+if (DEBUG){
+    dump("Time: " . microtime(true) - $start_framework);
+}
